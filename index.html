@@ -100,11 +100,9 @@ async function checkPassword() {
 
     const password = document.getElementById('password').value;
 
-    // SHA-256 hash of LZWP32
     const correctHash =
     '170704dbd848c207bc555cd9a000631a0aa4a823be51f2a319fd6fd171b254a6';
 
-    // Convert password to SHA-256
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
 
