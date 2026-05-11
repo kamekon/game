@@ -96,19 +96,36 @@
 </div>
 
 <script>
-    function checkPassword() {
-        const password = document.getElementById('password').value;
+async function checkPassword() {
 
-        // Правильный пароль
-        const correctPassword = 'LZWP32';
+    const password = document.getElementById('password').value;
 
-        if (password === correctPassword) {
-            // Переход на другой файл
-            window.location.href = 'gmdss.html';
-        } else {
-            document.getElementById('error').style.display = 'block';
-        }
+    // SHA-256 hash of LZWP32
+    const correctHash =
+    'f1c731dfc1a03aee2c7f0d0f1a0d2f1df7ef8f64b4dfd0d6f0c5eb2fd2f3f89d';
+
+    // Convert password to SHA-256
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+    const hashHex = hashArray
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+
+    if (hashHex === correctHash) {
+
+        window.location.href = 'gmdss.html';
+
+    } else {
+
+        document.getElementById('error').style.display = 'block';
+
     }
+}
 </script>
 
 </body>
